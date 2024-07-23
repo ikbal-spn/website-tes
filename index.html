@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+            animation: slideIn 1s ease-in-out;
+        }
+        .login-container label {
+            display: block;
+            margin: 10px 0 5px;
+            text-align: left;
+            font-weight: bold;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            animation: slideIn 1s ease-in-out;
+        }
+        .login-container input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        .login-container button {
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            animation: slideIn 1s ease-in-out;
+        }
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            display: none;
+            margin-top: 10px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .success-message {
+            color: green;
+            display: none;
+            margin-top: 10px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes successAnimation {
+            0% {
+                background-color: #007bff;
+                transform: scale(1);
+            }
+            50% {
+                background-color: #28a745;
+                transform: scale(1.2);
+            }
+            100% {
+                background-color: #007bff;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Login</h2>
+    <form id="login-form" onsubmit="return validateLogin(event)">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+        <p class="error-message" id="error-message"></p>
+        <p class="success-message" id="success-message">Login berhasil! Mengalihkan...</p>
+    </form>
+</div>
+
+<script>
+    function validateLogin(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const errorMessage = document.getElementById('error-message');
+        const successMessage = document.getElementById('success-message');
+        const loginButton = document.querySelector('button');
+
+        // Reset error and success messages
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+
+        // Validate input
+        if (!username || !password) {
+            errorMessage.textContent = 'Username dan password harus diisi!';
+            errorMessage.style.display = 'block';
+            return;
+        }
+
+        const usernamePattern = /^[a-zA-Z0-9]{3,}$/;
+        const passwordPattern = /^[a-zA-Z0-9!@#$%^&*]{6,}$/;
+
+        if (!usernamePattern.test(username)) {
+            errorMessage.textContent = 'Username harus minimal 3 karakter dan hanya mengandung huruf dan angka!';
+            errorMessage.style.display = 'block';
+            return;
+        }
+
+        if (!passwordPattern.test(password)) {
+            errorMessage.textContent = 'Password harus minimal 6 karakter dan dapat mengandung huruf, angka, dan karakter khusus!';
+            errorMessage.style.display = 'block';
+            return;
+        }
+
+        // Dummy validation
+        if (username === 'ikbal' && password === 'ikbaltes') {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'block';
+            loginButton.style.animation = 'successAnimation 1s ease-in-out';
+
+            setTimeout(() => {
+                window.location.href = 'https://www.facebook.com';
+            }, 1500);
+        } else {
+            errorMessage.textContent = 'Username atau password salah!';
+            errorMessage.style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+  </html>
+  
